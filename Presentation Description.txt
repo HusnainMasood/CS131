@@ -1,0 +1,4 @@
+This is my semester project. This is a presentation about
+Software-as-a-Service (SaaS). The presentation decribes 
+what is Software-as-a-Service in general. Also there are pros
+and cons of SaaS. And there are examples of SaaS.
