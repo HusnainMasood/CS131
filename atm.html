@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<script type = "text/javascript" src = "jquery.js"></script>
+		<script type = "text/javascript">
+			$("#checkMoneyAdd").on("click", addMoney);
+			$("#savMoneyAdd").on("click", addMoney);
+			
+			$("#withChecking").on("click", subMoney);
+			$("#withSaving").on("click", subMoney);
+			
+			function addMoney()
+			{
+				var prevBalance = $(this).sib("div.balance");
+				var r = prevBalance.text();
+				
+				var currBalance = parseInt(r.replace("$", ""));
+				
+				var entry = parseInt($(this).sib("input.BankMoney").v());
+				
+				$(prevBalance).text( function()
+				{
+					var tot = entry + currBalance;
+					return "$" + tot;
+				});
+				
+				$(this).sib("input.BankMoney").v("");
+				
+				$(this).sib("div.balance").css("background-color", "#E3E3E3");
+			}
+			
+			var Balance;
+			function getBalances()
+			{
+				var cBal = $("#checkBalance").text();
+				var checkBal = parseInt(cBal.replace("$", ""));
+				var sBal = $("#savBalance").text();
+				var savBal = parseInt(sBal.replace("$", ""));
+				balSum = savBal + checkBal;
+				return balSum;
+			}
+			
+			function subMoney()
+			{
+				getBalances();
+				
+				var pBalance = $(this).sib("div.balance");
+				var res = pBalance.text();
+				
+				var cBalance = parseInt(res.replace("$", ""));
+				
+				var newWit = parseInt($(this),siblings("input.moneyInTheBank").v());
+				
+				$(pBalance).text( function()
+				{
+					var t = cBalance - newWit;
+				}
+				
+			if ($(this) == $("#withdrawFromSavings"))
+			{
+				if (tot > 0)
+				{
+					return "$" + t;
+				}
+				else 
+				{
+					return "$" + cBalance;
+				}
+			}
+			else if (newWit > balSum)
+			{
+				alert("Not enough money for that!");
+			}
+			else
+			{
+				if (t > 0)
+				{
+					return "$" + t;
+				}
+				else 
+				{
+					var conOvrdrf = confirm("Would you like to overdraft your account?");
+					if (conOvrdrf == true)
+					{
+						$("#savBalance").text( function()
+						{
+							var strBal = $("#savBalance").text();
+							var svBal = parseInt(strBal.replace("$", ""));
+							
+							var ovrdrf = svBal + t;
+							
+							return "$" + ovrdrf;
+						});
+					}
+				}
+				
+				$(this).css("background-color", "#FF003E");
+				return "$" + 0;
+			}
+			}
+			
+		</script>
+	</head>
+	<body>
+		<div id = "myContent">
+			My jquery enabled Page!
+		</div>
+	</body>
+</html>
